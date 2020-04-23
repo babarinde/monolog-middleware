@@ -46,8 +46,10 @@ class MonologMiddleware implements MiddlewareInterface
     {
         $response = $handler->handle($request);
         $level = $this->getLogLevel($response->getStatusCode());
-
-        $this->log($level, $request, $response);
+        
+        \Swoole\Coroutine::create(function () use ($level, $request, $response) {
+            $this->log($level, $request, $response);    
+        });
 
         return $response;
     }
@@ -70,7 +72,6 @@ class MonologMiddleware implements MiddlewareInterface
             case Response::HTTP_NOT_ACCEPTABLE:
             case Response::HTTP_BAD_REQUEST:
             case Response::HTTP_BAD_GATEWAY:
-            case Response::HTTP_CONFLICT:
                 $level = Logger::WARNING;
                 break;
             case Response::HTTP_INTERNAL_SERVER_ERROR:

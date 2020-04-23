@@ -3,7 +3,7 @@
 [![Total Downloads](https://poser.pugx.org/oras/monolog-middleware/downloads)](https://packagist.org/packages/oras/monolog-middleware)
 [![License](https://poser.pugx.org/oras/monolog-middleware/license)](https://packagist.org/packages/oras/monolog-middleware)
 
-# Monolog Logger Middleware
+# Monolog Logger Middleware with Swoole
 Monolog Middleware to be used with PSR-7 middleware frameworks like Zend Expressive and Slim.
 
 **Now it does support Zend Expressive `3.*`**
@@ -18,11 +18,16 @@ To use with Zend Expressive `2.*` please install version `2.0.0`
 
 ### Installation
 
-##### 1) Install middleware using composer
+##### 1) Install and activate swoole (https://www.swoole.co.uk/)
+```sh
+pecl install swoole
+```
+
+##### 2) Install middleware using composer
 ```sh
 composer require oras/monolog-middleware
 ```
-##### 2) Add configuration
+##### 3) Add configuration
 Then in your Zend Expressive `config/autoload/` directory, created a new config file call it: `logger.local.php`
 
 As a starting point, you can have the following in the file:
@@ -52,7 +57,7 @@ return [
 Please refer to Loggables list at end for all possible variables.
 
 
-##### 3) Add factory and middleware to `dependencies.global.php` file as follows:
+##### 4) Add factory and middleware to `dependencies.global.php` file as follows:
 ```php
 'factories' => [
 
@@ -60,7 +65,7 @@ Please refer to Loggables list at end for all possible variables.
         ],
 ```
 
-##### 4) Now to start recording logs of request/response for a middleware, just put the following line after routing.
+##### 5) Now to start recording logs of request/response for a middleware, just put the following line after routing.
 
  Example:
  ```php
@@ -84,6 +89,7 @@ Please refer to Loggables list at end for all possible variables.
 
 ### Requirements
 - PHP >= 7.1
+- Swoole
 
 
 ### Configuration examples
